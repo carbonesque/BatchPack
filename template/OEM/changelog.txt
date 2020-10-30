@@ -1,0 +1,22 @@
+New/Fixed in 1.4.1
+Added more descriptive error messages (File Missing) & Dry Run Warning message
+Changed Copy/Import order, Imports CAT first, copies second.
+Fixed Bug CMD would still run if OEMBIOS files are corrupt
+Fixed Bug Dry Run would copy files.
+
+New in 1.4.0
+Windows 2003 (and vista?) support
+
+Fixed in 1.3.2
+Fix a buffer overrun which caused oemscan to crash on some systems while reading memory.
+
+New in 1.3.1
+Fails if Windows File Protection can’t be disabled.
+
+New in 1.3
+Fixed bug in BIN/SIG/DAT hash check
+Removes unused dllcache\oembios.cat file
+Allows you to pass a custom argument to your script
+Allows you to specify an exact range to search
+Changed scan range from 0xF0000-0xFFFFF to 0xE0000-0xFFFFF
+Dry Run parameter to validate OEMBIOS set. run oemscan.exe /d

@@ -1,0 +1,37 @@
+BUG: NTRegOpt will lock the registry from any more changes until next boot. (where 990_2ndBoot.cmd runs)
+run it last?
+Changelog:
+Rev 0.9.3
+  Fixed issue with properly detecting scriptpack.
+  Updated documentation in batch files.
+  Added OEM Install folders as documented in http://unattended.msfn.org/unattended.xp/view/web/18/
+    Added \$$\Resources\Themes\ - folder for themes
+    Added \$Docs\ - Copies contents to %HomePath%\My Documents\
+    Added \$Progs\ - Copies contents to \Program Files\
+Rev 0.9.2
+  First Public Release
+  Changed names of shortcuts so as not to be confusing
+  Added credits for JkDefrag and NTRegOpt
+  Fixed reg issue with Start Menu popping-up (needed to be HKCU)
+  Added $$\Web\Wallpaper folder to $OEM$. Just as an easy way to add wallpapers to 
+  install.
+
+Rev 0.9.1
+  Using shortcuts to run 1stBoot.cmd and 2ndBoot.cmd instead of RunOnce due to reg 
+  changes after first boot to desktop.  It would cause it to reboot twice after 
+  first desktop boot.
+  
+Rev 0.9.0
+  Fixed IE Home Page registry issue.
+  Fixed persistent IE, OE, and WMP shortcuts on Start Menu.
+  Shortcuts and IE settings don't take after first complete desktop boot. No matter 
+  what I do.  Setting final IE tweaks and "persistant" shortcut deletions to run from
+  2ndBoot.cmd, called by REG ADD from 1stBoot.cmd
+  Running 1stBoot.cmd and 2ndBoot.cmd from HKCU..\RunOnce
+  Offloaded work from CleanUp.cmd to RunOnceEx and 2ndBoot.cmd  Cleanup is mainly for 
+  the Start Menu.
+  
+Rev 0.8.7
+  Using different logging method by calling subroutines instead of appending 
+  >>install.log to every line.  Haven't been able to get it to work with wget yet.
+  

@@ -1,0 +1,79 @@
+OEMScan automates multi-manufacture installation Windows CD's by
+scanning the bios (0xE0000-0xFFFFF) for a Royalty OEM's SLP string 
+and copying over the appropriate OEMBIOS files for windows XP activation.
+
+Requirements:
+Windows XP
+OEM SLP Key
+SLP Identifier(s)
+OEMBIOS File set(s)
+
+Instructions:
+Modify the oemscan.ini file to suit your needs.
+
+[section title] =  SLP Identifier 
+PATH     =  Location of the OEMBIOS file set
+RANGE    =  Comma separated list of memory ranges <32bit address>:<size> if no range is specified
+            the default range of 0xE0000:0x20000 is used (see example)
+MATCHARG =  will replace @@@@ in CMD with its value (see example)
+CMD      =  Command to run if a match is found
+
+PATH, RANGE, MATCHARG, and CMD are optional
+
+Examples:
+The following example will search for "Gateway" @ F000:32F0 and F000:3110
+for 0x20(hex) bytes. If found it will copy the OEMBIOS fileset from 
+".\Gateway\" to the appropriate directories and run "SystemRoot%\notepad.exe c:\boot.ini"
+
+[Gateway]
+PATH=".\Gateway\"
+RANGE="0x000F32F0:20, 0x000F3110:20"
+MATCHARG="c:\boot.ini"
+CMD="%SystemRoot%\notepad.exe @@@@"
+
+
+The following example will search for Compaq
+and if found run "SystemRoot%\notepad.exe c:\boot.ini"
+
+[Compaq]
+MATCHARG="c:\boot.ini"
+CMD="%SystemRoot%\notepad.exe @@@@"
+
+
+The following example will search for Lenovo
+and if found copy over the oembios fileset in ".\Lenovo\"
+
+[Lenovo]
+PATH=".\Lenovo\"
+
+Notes:
+SLP Identifiers are parsed from top down, place more 
+restrictive file sets at the begining of the file.
+
+[_SM_] can be placed at the end of the oemscan.ini 
+file to be used as an else statement if no matching 
+SLP strings are found.
+
+The decrypted OEMBIOS.DAT file contains 16bit memory addresses
+which need to be converted to 32bit addresses for use in the RANGE parameter. 
+
+Example:
+BIOS=F000,E840,20,Gateway
+
+F000,E840 = 16bit address..  20 = size, Gateway = SLP Identifier.
+To convert a 16bit address to a 32bit address move (shift) the high word F000 over one and add the low word E840 giving you 0xFE840
+
+Google Calculator = http://www.google.com/search?hl=en&lr=&q=0xF000+*+0x10+%2B+0xE840&btnG=Search
+
+OEMBIOS file sets and SLP Identifiers can be obtained from http://www.oembios.net 
+
+Return Values:
+Critical Error = -1
+No Match = 0
+Match = 1
+
+
+For more information visit:
+http://www.msfn.org/board/index.php?showtopic=82638
+http://www.msfn.org/board/index.php?showtopic=71016
+
